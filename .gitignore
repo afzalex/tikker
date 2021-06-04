@@ -1,0 +1,6 @@
+output/
+
+.DS_Store
+.env
+
+.idea
