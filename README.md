@@ -1,9 +1,14 @@
+
+### Copy below in console for tiktok
 ```js
 fetch("https://afzalex.github.io/tikker/tiktok-downloader-script.js")
     .then(response => response.text())
     .then(text => eval(text));
 ```
+[Link to tiktok-downloader-script.js](https://afzalex.github.io/tikker/tiktok-downloader-script.js)
 
+
+### Files that could be used for insta
 To get all new data into /output/general/**
 ```sh
 get-collection-info.sh 
