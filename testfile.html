@@ -1,0 +1,163 @@
+<html>
+
+<body>
+    Hello World
+    <!-- <a href="http://localhost:5000/output/general/frames/at500/aish56858_2537656848003014211_5717405234.mp4_frame10.jpeg"
+        download>downloader</a> -->
+    <script>
+        function loadScript(url, onload) {
+            let script = document.createElement("script");
+            script.setAttribute("src", url);
+            onload && (script.onload = onload);
+            document.body.appendChild(script);
+            return script
+        }
+
+        function download(url) {
+            fetch(url).then(data => {
+                const blob = data.blob();
+                return blob;
+            }).then(blob => {
+                let reader = new window.FileReader();
+                reader.onloadend = function () {
+                    const data = reader.result;
+                    // console.log(data);
+                    var anchor = document.createElement('a');
+                    anchor.setAttribute('href', url);
+                    anchor.setAttribute('download', 'myNote.jpeg');
+
+                    /*
+                    * Click the anchor
+                    */
+
+                    // This works in Chrome, not in Firefox
+                    $(anchor)[0].click();
+
+                    // For Firefox, we need to manually do a click event
+
+                    // Create event
+                    /* var ev = document.createEvent("MouseEvents");
+                        ev.initMouseEvent("click", true, false, self, 0, 0, 0, 0, 0, false, false, false, false, 0, null); */
+
+                    // Fire event
+                    // anchor.dispatchEvent(ev);
+                };
+                reader.readAsDataURL(blob);
+            })
+        }
+
+
+        loadScript("https://code.jquery.com/jquery-3.6.0.js", e => {
+            loadScript("https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js", e => {
+                const url = 'http://localhost:5000/output/general/downloads/_akanchasharma__2576270585140954732_2833593662.mp4';
+
+                download(url)
+
+            })
+        })
+    </script>
+    <script>
+            (() => {
+
+                function loadScript(url, onload) {
+                    let script = document.createElement("script");
+                    script.setAttribute("src", url);
+                    onload && (script.onload = onload);
+                    document.body.appendChild(script);
+                    return script
+                }
+
+
+                loadScript("https://code.jquery.com/jquery-3.6.0.js")
+
+                function download(url, filename) {
+                    fetch(url).then(data => {
+                        const blob = data.blob();
+                        return blob;
+                    }).then(blob => {
+                        let reader = new window.FileReader();
+                        reader.onloadend = function () {
+                            const data = reader.result;
+                            var elem = window.document.createElement('a');
+                            elem.href = data;
+                            elem.download = filename;
+                            document.body.appendChild(elem);
+                            elem.click();        
+                            document.body.removeChild(elem);
+                        };
+                        reader.readAsDataURL(blob);
+                    })
+                }
+
+                download($('.video-card video').attr('src'))
+                
+
+            })
+    </script>
+
+    <script>
+        var addr = "https://m.tiktok.com/api/favorite/item_list/?aid=1988&app_name=tiktok_web&device_platform=web_pc&device_id=6970371766553560582&region=CA&priority_region=IN&os=mac&referer=&root_referer=&cookie_enabled=true&screen_width=1792&screen_height=1120&browser_language=en-US&browser_platform=MacIntel&browser_name=Mozilla&browser_version=5.0+(Macintosh%3B+Intel+Mac+OS+X+10_15_7)+AppleWebKit%2F537.36+(KHTML,+like+Gecko)+Chrome%2F91.0.4472.114+Safari%2F537.36&browser_online=true&verifyFp=verify_kq0sv9jr_dfXGcxCD_xBtI_4bhy_BwVO_45Z6R9lxLh7U&app_language=en&timezone_name=Asia%2FCalcutta&is_page_visible=true&focus_state=true&is_fullscreen=true&history_len=3&battery_info=0.39&count=30&cursor=0&secUid=MS4wLjABAAAAelpBqw6BlbuY9_a1EfxTT4llqqWLJh86_fDEDjxq4cOy58ShjsHzUbmVU2WVss6r&language=en&_signature=_02B4Z6wo00901o4ldOgAAIDAvnNDfmZTrVKOJXBAAMNda4";
+        var vidAdr = "https://v16-web.tiktok.com/video/tos/useast2a/tos-useast2a-ve-0068c002/d8eb5b3b5fc9432dabf5a1863c6538d3/?a=1988&br=3646&bt=1823&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&expire=1624843785&l=202106271929290101902190662FE6CC84&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&policy=2&qs=0&rc=ajo4dHI2eHdtNTMzNzczM0ApMzkzZmY4Njw1N2g6ZGY1OGdvYG5uYDBhYXBgLS1kMTZzc2BjYTYvMDQyX15eYS00MTQ6Yw%3D%3D&signature=1e205cbb31901d0185736e8970d3a1bb&tk=tt_webid_v2&vl=&vr=";
+
+        // COPY VAUE TO "itemList" VARIABLE
+
+        function pointerDownloader(dataPointer) {
+            if (dataPointer < itemList.length)
+            download(itemList[dataPointer].video.downloadAddr, itemList[dataPointer].id, () => pointerDownloader(++dataPointer))
+        }
+
+        var downloaded = [];
+        var dataPointer = 0;
+        function pointerDownloaderMod(force) {
+            if (dataPointer < itemList.length) {
+                let item = itemList[dataPointer];
+                if(force || downloaded.indexOf(item.id) == -1) {
+                    download(itemList[dataPointer].video.downloadAddr, itemList[dataPointer].id, () => pointerDownloader(++dataPointer))
+                    downloaded.push(item.id);
+                }
+                dataPointer++;
+            }
+            return dataPointer;
+        }
+
+        var itemList = []
+        function addNewData(newDataItemList) {
+            let itemListPrevLength = itemList.length;
+            newDataItemList.forEach(n => {
+                if (itemList.findIndex(d => d.id == n.id) == -1) {
+                    itemList.push(n)
+                }
+            });
+            let itemListNewLength = itemList.length;
+            console.log(`Old Size : ${itemListPrevLength}\nNew Size : ${itemListNewLength}\nNewly Added : ${itemListNewLength - itemListPrevLength}`)
+        }
+
+        function downloadObjectAsJson(itemList){
+            let d = new Date(2010, 7, 5);
+            let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+            let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+            let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+            let fileName = `tiktok_itemlist_${da}_${mo}_${ye}_${Date.now()}.json`;
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(itemList));
+            var downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href",     dataStr);
+            downloadAnchorNode.setAttribute("download", fileName);
+            document.body.appendChild(downloadAnchorNode); // required for firefox
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+
+
+        function resetDownloaded() {
+            downloaded = []
+        }
+
+        function downloadItemList() {
+            downloadObjectAsJson(itemList);
+        }
+
+    </script>
+</body>
+
+</html>
