@@ -108,6 +108,7 @@
                     downloaded.push(d);
                 }
             })
+            return downloaded.length;
         }
 
         let downloadObjectAsJson = this.downloadObjectAsJson = function (itemList) {
@@ -159,7 +160,7 @@
 
     console.log("%c tik is installed successfully.", "color: #070; font-weight: bold;");
     console.log("%c Command to get all downloaded array", "color: #888");
-    console.log("%c ls | grep -E '^\d+\.mp4' | grep -oE '^\d+' | jq -ncR '[inputs]' | pbcopy", "color: black; font-family: monospace;")
+    console.log("%c ls | grep -E '^\d+\.mp4' |  grep -E '^[0-9]+\.mp4$' | jq -ncR '[inputs]' | pbcopy", "color: black; font-family: monospace;")
 
 
     /*
