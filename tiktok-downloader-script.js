@@ -150,11 +150,11 @@
         }
     }
 
-    if (typeof itemList === 'undefined') {
-        var itemList = []
+    if (typeof window.itemList === 'undefined') {
+        window.itemList = []
     }
-    var tik = new tikFunction(itemList);
-    tik.setDataPointer(150)
+    window.tik = new tikFunction(itemList);
+    window.tik.setDataPointer(0);
 
 
     console.log("%c tik is installed successfully.", "color: #070; font-weight: bold;");
