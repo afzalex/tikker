@@ -1,4 +1,8 @@
-
+```js
+fetch("https://afzalex.github.io/tikker/tiktok-downloader-script.js")
+    .then(response => response.text())
+    .then(text => eval(text));
+```
 
 To get all new data into /output/general/**
 ```sh
