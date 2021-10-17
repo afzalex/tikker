@@ -51,6 +51,8 @@
                 if (force || downloaded.indexOf(item.id) == -1) {
                     download(item.video.downloadAddr, item.id, () => pointerDownloader(++dataPointer))
                     downloaded.push(item.id);
+                } else {
+                    console.log('%c Present in downloaded list.', 'color: #a00');
                 }
                 showItemInfoForDataPointer(dataPointer);
                 this.dataPointer++;
@@ -160,12 +162,6 @@
 
     console.log("%c tik is installed successfully.", "color: #070; font-weight: bold;");
     console.log("%c Command to get all downloaded array", "color: #888");
-    console.log("%c ls | grep -E '^\d+\.mp4' |  grep -E '^[0-9]+\.mp4$' | jq -ncR '[inputs]' | pbcopy", "color: black; font-family: monospace;")
-
-
-    /*
-    Command to get all dowloaded array
-    ls | grep -E '^\d+\.mp4' | grep -oE '^\d+' | jq -ncR '[inputs]' | pbcopy
-    */
+    console.log("%c ls | grep -E '^[0-9]+\.mp4$' |  grep -oE '^[0-9]+' | jq -ncR '[inputs]' | pbcopy", "color: black; font-family: monospace;")
 
 })();

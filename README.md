@@ -1,7 +1,7 @@
 ### Copy below in console for tiktok
 
 ```js
-fetch("https://afzalex.github.io/tikker/tiktok-downloader-script.js?v=02")
+fetch("https://afzalex.github.io/tikker/tiktok-downloader-script.js?v=03")
     .then(response => response.text())
     .then(text => eval(text));
 ```
@@ -11,7 +11,7 @@ fetch("https://afzalex.github.io/tikker/tiktok-downloader-script.js?v=02")
 Command to get downloaded array
 
 ```
-ls | grep -E '^\d+\.mp4' |  grep -E '^[0-9]+\.mp4$' | jq -ncR '[inputs]' | pbcopy
+ls | grep -E '^[0-9]+\.mp4$' |  grep -oE '^[0-9]+' | jq -ncR '[inputs]' | pbcopy
 ```
 
 ### Files that could be used for insta
