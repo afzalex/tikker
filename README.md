@@ -1,7 +1,7 @@
 ### Copy below in console for tiktok
 
 ```js
-fetch("https://afzalex.github.io/tikker/tiktok-downloader-script.js?v=04")
+fetch("https://afzalex.github.io/tikker/tiktok-downloader-script.js?v=05")
     .then(response => response.text())
     .then(text => eval(text));
 ```

@@ -1,7 +1,9 @@
 (function () {
 
     function tikFunction(itemList, dataPointer, downloaded) {
-        let loadScript = this.loadScript = function (url, onload) {
+        let vm = this;
+        vm.logLevel = 0;
+        let loadScript = vm.loadScript = function (url, onload) {
             let script = document.createElement("script");
             script.setAttribute("src", url);
             onload && (script.onload = onload);
@@ -11,7 +13,7 @@
 
         loadScript("https://code.jquery.com/jquery-3.6.0.js")
 
-        let download = this.download = function (url, filename, successHandler, errorHandler) {
+        let download = vm.download = function (url, filename, successHandler, errorHandler) {
             fetch(url).then(data => {
                 const blob = data.blob();
                 return blob;
@@ -33,26 +35,26 @@
             })
         }
 
-        this.dataPointer = 0;
-        this.itemList = [];
-        this.downloaded = [];
+        vm.dataPointer = 0;
+        vm.itemList = [];
+        vm.downloaded = [];
 
         if (dataPointer) {
-            this.dataPointer = dataPointer;
+            vm.dataPointer = dataPointer;
         }
 
         if (itemList) {
-            this.itemList = itemList;
+            vm.itemList = itemList;
         }
 
         if (downloaded) {
-            this.downloaded = downloaded;
+            vm.downloaded = downloaded;
         }
 
-        this.downloadNextVideo = function (force, successHandler, errorHandler) {
-            let downloaded = this.downloaded;
-            let itemList = this.itemList;
-            let dataPointer = this.dataPointer;
+        vm.downloadNextVideo = function (force, successHandler, errorHandler) {
+            let downloaded = vm.downloaded;
+            let itemList = vm.itemList;
+            let dataPointer = vm.dataPointer;
             if (dataPointer < itemList.length) {
                 let item = itemList[dataPointer];
                 let isNewToDownload = downloaded.indexOf(item.id) == -1;
@@ -63,36 +65,41 @@
                     }, e => {
                         console.log(`%c Unable to download video of dataPointer ${dataPointer}`, 'color: #a00')
                     });
+                    console.log(`%c Added video with dataPointer ${dataPointer} to download`, '')
                 } else {
-                    console.log('%c Present in downloaded list.', 'color: #a00');
+                    console.log(`%c Video of datapointer ${dataPointer} is present in downloaded list`, 'color: #a00');
                 }
                 showItemInfoForDataPointer(dataPointer);
-                this.dataPointer++;
+                vm.dataPointer++;
             } else {
-                console.log(`End of List | dataPointer : ${this.dataPointer}`);
+                console.log(`End of List | dataPointer : ${vm.dataPointer}`);
             }
-            return this.dataPointer;
+            return vm.dataPointer;
         }
 
-        this.redownloadLastVideo = function () {
-            this.dataPointer--;
-            let item = this.itemList[this.dataPointer];
-            this.downloadNextVideo(true);
+        vm.redownloadLastVideo = function () {
+            vm.dataPointer--;
+            let item = vm.itemList[vm.dataPointer];
+            vm.downloadNextVideo(true);
         }
 
-        this.downloadNextNVideos = function(n, force) {
+        vm.downloadNextNVideos = function(n, force) {
             if(!n) n = 10;
             for(let i = 0; i < n; i++) tik.downloadNextVideo(force)
         }
-        this.redownloadNextNVideos = function(n, force) {
+        vm.redownloadNextNVideos = function(n, force) {
             if(!n) n = 10;
             tik.dataPointer -= n;
-            this.downloadNextNVideos(n, force);
+            vm.downloadNextNVideos(n, force);
         }
 
 
-        let showItemInfoForDataPointer = this.showItemInfoForDataPointer = function (dataPointer, showIsDownloaded) {
-            let item = this.itemList[dataPointer];
+        let showItemInfoForDataPointer = vm.showItemInfoForDataPointer = function (dataPointer, showIsDownloaded) {
+            if(vm.logLevel == 0) {
+                return;
+            }
+
+            let item = vm.itemList[dataPointer];
             if (!item) {
                 console.log('Item not found')
                 return
@@ -102,19 +109,19 @@
             op += `Video Desc : ${item.desc}\n`
             op += `Author Name : ${item.author.nickname}\n`
             op += `Data Pointer : ${dataPointer}\n`
-            showIsDownloaded && (op += `Is Downloaded : ${(this.downloaded.indexOf(item.id) != -1)}`)
+            showIsDownloaded && (op += `Is Downloaded : ${(vm.downloaded.indexOf(item.id) != -1)}`)
             console.log(op)
         }
 
-        this.showNextItemInfo = function () {
-            showItemInfoForDataPointer(this.dataPointer)
+        vm.showNextItemInfo = function () {
+            showItemInfoForDataPointer(vm.dataPointer)
         }
-        this.showLastItemInfo = function () {
-            showItemInfoForDataPointer(this.dataPointer - 1);
+        vm.showLastItemInfo = function () {
+            showItemInfoForDataPointer(vm.dataPointer - 1);
         }
 
-        this.addNewData = function (newDataItemList) {
-            let itemList = this.itemList;
+        vm.addNewData = function (newDataItemList) {
+            let itemList = vm.itemList;
             let itemListPrevLength = itemList.length;
             newDataItemList.forEach(n => {
                 if (itemList.findIndex(d => d.id == n.id) == -1) {
@@ -125,8 +132,8 @@
             console.log(`Old Size : ${itemListPrevLength}\nNew Size : ${itemListNewLength}\nNewly Added : ${itemListNewLength - itemListPrevLength}`)
         }
 
-        this.addDownloaded = function (newDownloadedList) {
-            let downloaded = this.downloaded;
+        vm.addDownloaded = function (newDownloadedList) {
+            let downloaded = vm.downloaded;
             newDownloadedList.forEach(d => {
                 if (downloaded.indexOf(d) == -1) {
                     downloaded.push(d);
@@ -135,7 +142,7 @@
             return downloaded.length;
         }
 
-        let downloadObjectAsJson = this.downloadObjectAsJson = function (itemList) {
+        let downloadObjectAsJson = vm.downloadObjectAsJson = function (itemList) {
             let d = new Date(2010, 7, 5);
             let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
             let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
@@ -150,28 +157,28 @@
             downloadAnchorNode.remove();
         }
 
-        this.setDataPointer = function (dataPointer) {
-            this.dataPointer = dataPointer;
-            return this.dataPointer;
+        vm.setDataPointer = function (dataPointer) {
+            vm.dataPointer = dataPointer;
+            return vm.dataPointer;
         }
-        this.decrementDataPointer = function () {
-            this.dataPointer--;
-            return this.dataPointer;
+        vm.decrementDataPointer = function () {
+            vm.dataPointer--;
+            return vm.dataPointer;
         }
-        this.incrementDataPointer = function () {
-            this.dataPointer++;
-            return this.dataPointer;
+        vm.incrementDataPointer = function () {
+            vm.dataPointer++;
+            return vm.dataPointer;
         }
-        this.resetDataPointer = function () {
-            this.dataPointer = 0;
-        }
-
-        this.resetDownloaded = function () {
-            this.downloaded = []
+        vm.resetDataPointer = function () {
+            vm.dataPointer = 0;
         }
 
-        this.downloadItemListJson = function () {
-            downloadObjectAsJson(this.itemList);
+        vm.resetDownloaded = function () {
+            vm.downloaded = []
+        }
+
+        vm.downloadItemListJson = function () {
+            downloadObjectAsJson(vm.itemList);
         }
     }
     let tik = new tikFunction();
