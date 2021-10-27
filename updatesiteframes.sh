@@ -1,3 +1,5 @@
-ls -1 output/general/downloads > site/public/assets/downloadlist.json
-ls -1 output/general/frames/at500 > site/public/assets/downloadlisttframes.json
+source settings.sh
+
+ls -1 output/general/downloads > ${site_loc}/public/assets/downloadlist.json
+ls -1 output/general/frames/at500 > ${site_loc}/public/assets/downloadlisttframes.json
 
