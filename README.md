@@ -1,4 +1,4 @@
-### Copy below in console for tiktok
+## Copy below in console for tiktok
 
 ```js
 fetch("https://afzalex.github.io/tikker/tiktok-downloader-script.js?v=05")
@@ -14,7 +14,7 @@ Command to get downloaded array
 ls | grep -E '^[0-9]+\.mp4$' |  grep -oE '^[0-9]+' | jq -ncR '[inputs]' | pbcopy
 ```
 
-### Files that could be used for insta
+## Files that could be used for insta
 
 To get all new data into /output/general/**
 
@@ -25,7 +25,7 @@ get-collection-info.sh
 To download videos from all collected info
 
 ```sh
-dounloader.sh
+downloader.sh
 ```
 
 To download frames of all videos
@@ -34,6 +34,7 @@ To download frames of all videos
 get-frames.sh
 ```
 
+## Other information
 ```sh
 curl -H @headers.txt "https://i.instagram.com/api/v1/feed/collection/17852729468262794/posts/?max_id=" | gunzip | jq
 
