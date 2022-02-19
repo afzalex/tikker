@@ -53,6 +53,10 @@ export const VideoBox = ({ id, onClose, onNext, onPrev, onUp, onDown }) => {
 
     const boxElement = useRef(null);
 
+    const videoCompleteCallback = function(e) {
+        onNext({}, id)
+    }
+
     const handleClosure = useCallback(e => {
         setDoDisplay(false)
         setVideoUrl(null)
@@ -108,9 +112,10 @@ export const VideoBox = ({ id, onClose, onNext, onPrev, onUp, onDown }) => {
             <Close className={classes.closeButton} onClick={handleClosure} />
             {id && <div key={id} style={{ opacity: isVideoLoaded ? 1 : 0.5 }}>
                 <video className={`${classes.vidLayer} ${classes.vidFront}`}
-                    autoPlay={true} loop={true}
+                    autoPlay={true} 
                     controls style={{ backgroundImage: `${videoUrl}` }}
                     onLoadedData={e => setIsVideoLoaded(true)}
+                    onEnded={videoCompleteCallback}
                     ref={boxElement}
                 >
                     <source src={videoUrl} type="video/mp4" ></source>

@@ -3,7 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { ZoomIn, ZoomOut } from '@material-ui/icons';
+import { AllInclusive, Refresh, ZoomIn, ZoomOut } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { useContext, useEffect, useState } from 'react';
 import './App.css';
@@ -48,6 +48,7 @@ const App = () => {
   const [galleryItemWidth, setGalleryItemWidth] = useState(150);
   const getProportionalHeight = (width) => parseInt(width * 7 / 4);
   const [galleryItemHeight, setGalleryItemHeight] = useState(getProportionalHeight(galleryItemWidth));
+  const [isVideoLoopOn, setVideoLoopOn] = useState(true)
   const classes = useStyles();
   return (
     <GalleryContext.Provider value={initialGalleryContext}>
@@ -59,6 +60,9 @@ const App = () => {
           <Typography variant="h6" className={classes.title}>
             Gallery
           </Typography>
+          <IconButton color={isVideoLoopOn ? 'inherit' : 'warning'} onClick={e => { setVideoLoopOn(!isVideoLoopOn) }}>
+            <AllInclusive />
+          </IconButton>
           <IconButton color="inherit" onClick={e => {
             if (galleryItemWidth > 400) return;
             const newWidth = galleryItemWidth + 50

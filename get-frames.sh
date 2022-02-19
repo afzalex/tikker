@@ -22,7 +22,7 @@ do
     echo "processing ${inputdir}${line} : $progress%"
 
 
-    echo ffmpeg  -nostdin -v error -i "${inputdir}${line}" -frames:v 10 -r 0.5 "${outputdir}${line}_frame%02d.jpeg"
+    # echo ffmpeg  -nostdin -v error -i "${inputdir}${line}" -frames:v 10 -r 0.5 "${outputdir}${line}_frame%02d.jpeg"
     ffmpeg  -nostdin -v error -i "${inputdir}${line}" -frames:v 10 -r 0.5 "${outputdir}${line}_frame%02d.jpeg" < /dev/null
     status=$?
     if [[ "$status" != 0 ]]

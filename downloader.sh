@@ -9,7 +9,7 @@ downloaded=`ls -l1 "${outputDir}/downloads"`
 tail -r "${outputDir}/list.dat" |
 while read line
 do 
-    json=`cat output/general/$line/data.json`
+    json=`cat ${outputDir}/$line/data.json`
     filename="`jq -r '.media.user.username' <<< $json`_`jq -r '.media.id' <<< $json`.mp4"
     if ! grep -q "$filename" <<< "${downloaded}"
     then
