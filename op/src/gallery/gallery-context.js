@@ -2,8 +2,8 @@ import React from "react";
 import { from } from "rxjs";
 import { map, mergeMap } from "rxjs/operators";
 
-const SERVE_URL = 'http://localhost:8000';
-// const SERVE_URL = '';
+// const SERVE_URL = 'http://localhost:8000';
+const SERVE_URL = '';
 // const SERVE_URL=process.env.SERVE_URL;
 
 const downloadListUrl = `assets/downloadlist.json`;

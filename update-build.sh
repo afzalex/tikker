@@ -16,10 +16,14 @@ source ./settings.sh
 # update new frames to site
 ./updatesiteframes.sh
 
-pushd .
-cd ${site_loc}
-npm install
-npm run build
-npm start
+if [[ ${DOBUILD} ]]; then
+    pushd .
+    cd ${site_loc}
+    npm install
+    npm run build
+    popd
+fi
 
-popd
+if [[ ${DOSERVE} ]]; then
+    echo y | npx serve
+fi
