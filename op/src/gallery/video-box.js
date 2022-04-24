@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { videourl } from './gallery-context';
 import Close from '@material-ui/icons/Close';
 import { useSwipeable } from 'react-swipeable';
+import {BrowserView} from 'react-device-detect';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const VideoBox = ({ id, onClose, onNext, onPrev, onUp, onDown }) => {
+export const VideoBox = ({ id, onClose, onNext, onPrev, onUp, onDown, isVideoLoopOn }) => {
     const classes = useStyles();
     const [doDisplay, setDoDisplay] = useState(false);
     const [videoUrl, setVideoUrl] = useState(null);
@@ -54,7 +56,11 @@ export const VideoBox = ({ id, onClose, onNext, onPrev, onUp, onDown }) => {
     const boxElement = useRef(null);
 
     const videoCompleteCallback = function(e) {
-        onNext({}, id)
+        if (isVideoLoopOn) {
+            onNext({}, id)
+        } else {
+            boxElement.play()
+        }
     }
 
     const handleClosure = useCallback(e => {
@@ -120,11 +126,13 @@ export const VideoBox = ({ id, onClose, onNext, onPrev, onUp, onDown }) => {
                 >
                     <source src={videoUrl} type="video/mp4" ></source>
                 </video>
-                <div className={`${classes.vidLayer} ${classes.vidBackMid}`}></div>
-                <video className={`${classes.vidLayer} ${classes.vidBack}`}
-                    autoPlay={true} loop={true} muted={true}>
-                    <source src={videoUrl} type="video/mp4"></source>
-                </video>
+                <BrowserView>
+                    <div className={`${classes.vidLayer} ${classes.vidBackMid}`}></div>
+                    <video className={`${classes.vidLayer} ${classes.vidBack}`}
+                        autoPlay={true} loop={true} muted={true} >
+                        <source src={videoUrl} type="video/mp4"></source>
+                    </video>
+                </BrowserView>
             </div>}
         </div>
     </>

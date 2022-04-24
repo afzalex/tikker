@@ -77,12 +77,12 @@ const App = () => {
           }}><ZoomOut /></IconButton>
         </Toolbar>
       </AppBar>
-      <Gallery galleryItemWidth={galleryItemWidth} galleryItemHeight={galleryItemHeight} />
+      <Gallery galleryItemWidth={galleryItemWidth} galleryItemHeight={galleryItemHeight} isVideoLoopOn={isVideoLoopOn} />
     </GalleryContext.Provider>
   );
 }
 
-export const Gallery = ({galleryItemWidth, galleryItemHeight}) => {
+export const Gallery = ({galleryItemWidth, galleryItemHeight, isVideoLoopOn}) => {
   const classes = useStyles();
   const galleryContext = useContext(GalleryContext);
   const [dataList, setDataList] = useState(galleryContext.dataList);
@@ -129,7 +129,7 @@ export const Gallery = ({galleryItemWidth, galleryItemHeight}) => {
 
   return <>
     <VideoBox id={idSelectedToPlay} onClose={e => setIdSelectedToPlay(null)} 
-      onNext={onVideoNext} onPrev={onVideoPrev}
+      onNext={onVideoNext} onPrev={onVideoPrev} isVideoLoopOn={isVideoLoopOn}
     />
     <div className={classes.galleryBox}>
       {dataList && dataList.map(d =>

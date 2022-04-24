@@ -2,21 +2,25 @@
 
 source ./settings.sh
 
-# download new data into jsons
-./get-collection-info.sh 
+if [[ ${DOFETCH} == 1 ]]
+then
 
-#if [[ $? != 0 ]]; then exit 1 fi
+    # download new data into jsons
+    ./get-collection-info.sh 
 
-# download videos
-./downloader.sh
+    #if [[ $? != 0 ]]; then exit 1 fi
 
-# create frames 
-./get-frames.sh f
+    # download videos
+    ./downloader.sh
 
-# update new frames to site
-./updatesiteframes.sh
+    # create frames 
+    ./get-frames.sh f
 
-if [[ ${DOBUILD} ]]; then
+    # update new frames to site
+    ./updatesiteframes.sh
+fi
+
+if [[ ${DOBUILD} == 1 ]]; then
     pushd .
     cd ${site_loc}
     npm install
@@ -24,6 +28,6 @@ if [[ ${DOBUILD} ]]; then
     popd
 fi
 
-if [[ ${DOSERVE} ]]; then
+if [[ ${DOSERVE} == 1 ]]; then
     echo y | npx serve
 fi
