@@ -6,3 +6,5 @@ output/
 .idea
 
 .output.json
+
+dl/frames*

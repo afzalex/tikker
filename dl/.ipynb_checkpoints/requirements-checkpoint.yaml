@@ -1,0 +1,11 @@
+name: tikker
+channels:
+  - defaults
+dependencies:
+  - pip
+  - pip: 
+    - opencv-python
+    - matplotlib
+    - decord
+    - pandas
+    - tensorflow
