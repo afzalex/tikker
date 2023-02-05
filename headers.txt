@@ -1,9 +1,19 @@
-x-ig-www-claim: hmac.AR020fmJNlBT9zI4oAm0Cu32rFX0WoEoycTfhoObfsXv7Bop
-x-ig-app-id: 1217981644879628
-cookie: ig_did=F729737E-3621-4654-B097-097A7FE3F002; mid=YEfQ5wAEAAE7o6ytF41-BduTDsl0; ig_nrcb=1; shbid=2884; rur=RVA; csrftoken=QnF3Lp7pwH0q1oCdzQVXNFFrRhVboCTr; ds_user_id=6492687070; sessionid=6492687070%3AxDHUX6FjSzQYdF%3A18; shbts=1620997700.5923896
-User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1
-Accept: */*
-origin: https://www.instagram.com
-referer: https://www.instagram.com/
-Accept-Encoding: gzip, deflate, br
-Connection: keep-alive
+authority: www.instagram.com
+accept: */*
+accept-language: en-US,en;q=0.9
+cookie: ig_did=BDA03D43-C352-4CC8-A20E-9AEBF1A5FECE; ig_nrcb=1; mid=Y05u6QAEAAEf1jQ2LMHbOzsvDa2s; fbm_124024574287414=base_domain=.instagram.com; csrftoken=H3AInBa2zK6J27eptCCmtPYHShU3jAtc; ds_user_id=6492687070; datr=Z7p0Y4VHFjULW9MN_Ge36b2K; shbid="19045\0546492687070\0541706704264:01f72b46f148b08690dd3409eb06e9e10297d27e25edc0066810711bb28852a3d33e9651"; shbts="1675168264\0546492687070\0541706704264:01f72fdbd581d314cfcead24aff85971c2f2851dc5b22aca4c3a5f36aba27063d0402ca1"; fbsr_124024574287414=wDa7t-e2_vlE7Jv7_wpsfBGjAeDiYnCFO670f7lsr7Y.eyJ1c2VyX2lkIjoiMTAwMDA5NTc1ODIzODI0IiwiY29kZSI6IkFRQ2VWanJsZGhUUlZPOWtiWF9Ec2FPNkVlanktWUJfTXcyTzlyUnhVakFBWFBqZ3l5V18zbXc1RGhuRHU2cDVTajBrMEhWanVQOHViYTI3NjBIWURvb0w0NWdjcFVMdG1rTzVuWjJTTGRIUk1LOG1lVUZJVXZoTUN6MUVmU2FfYTc1aFdXZEZFektFVkcxeks2dmFnVWFEekYxaGEzbHNBcmdsaWNTRU0zbzlHTnhvSU1CY3l6M29WQmFXeDVsZENDSllReDN5YTRZeUYwTXl2NFZ0WnQtNlhyLUppZmVxaW1oVFZKUnlrQ1gwWUhBOVdPaWV5YkdNa1FIOHRsQVp3MGlidzFtYkhvMVZmdXplN05vejNsZVJudTdQd0ZYMFV2V3NnVFRZSjZRS0hNNFZmR2IycE81eUl2Q0NHemdpdmpsMFdybGp5S3pYN2cwa3BCbWtUZUFZIiwib2F1dGhfdG9rZW4iOiJFQUFCd3pMaXhuallCQUxFQWZocDdxd3FiT29veEdnRHBZQ0UzQ3BNTndaQ1RiWEl4UU44QkhZT2lQd2ptVTJJUnpLUTFBdkNBbFUydlR5UWQ4dG1DcUhaQzVJVlh1VzZsNHZ2TzNlT1pBaklkUU9Well0NVlvT005blpBYWRmQkFua3U2Q3J4OGw2Vzk4bk5GenFXZjE5Z2VuSmNvbGJvUklDejJyMXVaQWZ0SFBnSTgzOURQUCIsImFsZ29yaXRobSI6IkhNQUMtU0hBMjU2IiwiaXNzdWVkX2F0IjoxNjc1MTY4MzM5fQ; sessionid=6492687070%3AQmto4RBOIGnCU7%3A2%3AAYdDq9CdT2pXcnAYggl4y2575P6IWrF0MyywJzLC0w; fbsr_124024574287414=wDa7t-e2_vlE7Jv7_wpsfBGjAeDiYnCFO670f7lsr7Y.eyJ1c2VyX2lkIjoiMTAwMDA5NTc1ODIzODI0IiwiY29kZSI6IkFRQ2VWanJsZGhUUlZPOWtiWF9Ec2FPNkVlanktWUJfTXcyTzlyUnhVakFBWFBqZ3l5V18zbXc1RGhuRHU2cDVTajBrMEhWanVQOHViYTI3NjBIWURvb0w0NWdjcFVMdG1rTzVuWjJTTGRIUk1LOG1lVUZJVXZoTUN6MUVmU2FfYTc1aFdXZEZFektFVkcxeks2dmFnVWFEekYxaGEzbHNBcmdsaWNTRU0zbzlHTnhvSU1CY3l6M29WQmFXeDVsZENDSllReDN5YTRZeUYwTXl2NFZ0WnQtNlhyLUppZmVxaW1oVFZKUnlrQ1gwWUhBOVdPaWV5YkdNa1FIOHRsQVp3MGlidzFtYkhvMVZmdXplN05vejNsZVJudTdQd0ZYMFV2V3NnVFRZSjZRS0hNNFZmR2IycE81eUl2Q0NHemdpdmpsMFdybGp5S3pYN2cwa3BCbWtUZUFZIiwib2F1dGhfdG9rZW4iOiJFQUFCd3pMaXhuallCQUxFQWZocDdxd3FiT29veEdnRHBZQ0UzQ3BNTndaQ1RiWEl4UU44QkhZT2lQd2ptVTJJUnpLUTFBdkNBbFUydlR5UWQ4dG1DcUhaQzVJVlh1VzZsNHZ2TzNlT1pBaklkUU9Well0NVlvT005blpBYWRmQkFua3U2Q3J4OGw2Vzk4bk5GenFXZjE5Z2VuSmNvbGJvUklDejJyMXVaQWZ0SFBnSTgzOURQUCIsImFsZ29yaXRobSI6IkhNQUMtU0hBMjU2IiwiaXNzdWVkX2F0IjoxNjc1MTY4MzM5fQ; rur="NAO\0546492687070\0541706705364:01f77be1f78c209606cfd84f2552574c591a42d2352e31d3f913624bed229779666f3896"
+referer: https://www.instagram.com/anony.ranger/saved/crnt/17852729468262794/
+sec-ch-prefers-color-scheme: light
+sec-ch-ua: "Not_A Brand";v="99", "Google Chrome";v="109", "Chromium";v="109"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "macOS"
+sec-fetch-dest: empty
+sec-fetch-mode: cors
+sec-fetch-site: same-origin
+user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
+viewport-width: 1346
+x-asbd-id: 198387
+x-csrftoken: H3AInBa2zK6J27eptCCmtPYHShU3jAtc
+x-ig-app-id: 936619743392459
+x-ig-www-claim: hmac.AR020fmJNlBT9zI4oAm0Cu32rFX0WoEoycTfhoObfsXv7KxN
+x-requested-with: XMLHttpRequest

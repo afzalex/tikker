@@ -77,3 +77,60 @@ var iframe = $("<iframe/>").attr({
     src: my_url,
 }).appendTo($('body'));
 ```
+
+
+## Useful commands
+```
+ffmpeg -i theme_video.mp4 -i theme_audio.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 -ss 28 -t 5 -y theme_pre1.mp4 && ffmpeg -i theme_pre1.mp4 -af "volume=0:enable='between(t,1,3)'" -y theme_pre.mp4 && ffplay -autoexit theme_pre.mp4
+
+ffmpeg -i theme_video.mp4 -i theme_audio.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 -ss 28 -t 5 -y theme_pre1.mp4
+ffmpeg -i theme_pre1.mp4 -af "volume=0:enable='between(t,1,3)'" -max_muxing_queue_size 1024 -y theme_pre.mp4
+
+
+ffmpeg -i theme_video.mp4 -i theme_audio.mp3 -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 -ss 28 -t 8 -y theme_pre1.mp4
+ffmpeg -i theme_pre1.mp4 -af "volume=0:enable='between(t,1,3)'" -max_muxing_queue_size 1024 -y theme_pre.mp4
+ffplay -autoexit theme_pre.mp4
+
+
+ffmpeg -i theme_video.mp4 -i theme_audio.mp3 -c:v libx264 -c:a aac -map 0:v:0 -map 1:a:0 -ss 28 -t 8 -y theme_pre1.mp4
+
+
+TARGET_FILE_NAME=theme_pre_short.mp4
+ffmpeg -i theme_video.mp4 -i theme_audio.mp3 -c:v libx264 -c:a aac -map 0:v:0 -map 1:a:0 -ss 28 -t 4 -y "${TARGET_FILE_NAME}"
+mv "${TARGET_FILE_NAME}" temp.mp4
+ffmpeg -i temp.mp4 -af "volume=0.5:enable='between(t,2.5,3)', volume=0.25:enable='between(t,3,3.5)', volume=0.14:enable='between(t,3.5,4)'" -max_muxing_queue_size 1024 -y "${TARGET_FILE_NAME}"
+ffplay -autoexit "${TARGET_FILE_NAME}"
+
+
+SOURCE_VID=source_01.mp4
+OUTPUT_VID=output_01.mp4
+ffmpeg -i "${TARGET_FILE_NAME}" -i "${SOURCE_VID}" -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" -y "${OUTPUT_VID}"
+
+
+
+
+ffprobe -v 32 source_01.mp4  2>&1
+
+ffmpeg -i "${TARGET_FILE_NAME}" -i "${SOURCE_VID}" -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]; [v]scale=720:1280[v2]" -map "[v2]" -map "[a]" -y "${OUTPUT_VID}"
+ffmpeg -i "${TARGET_FILE_NAME}" -i "${SOURCE_VID}" -filter_complex "[0:v:0]scale=720:1280[v0]; [v0][0:a][1:v][1:a] concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -y "${OUTPUT_VID}"
+ffmpeg -i "${TARGET_FILE_NAME}" -i "${SOURCE_VID}" -filter_complex "[0:v:0]crop=720:1280:0:0[v0]; [v0][0:a][1:v][1:a] concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -y "${OUTPUT_VID}"
+ffmpeg -i "${TARGET_FILE_NAME}" -i "${SOURCE_VID}" -filter_complex "[0:v:0]scale=-1:1280[v1]; [v1]crop=720:1280:0:0[v0]; [v0][0:a][1:v][1:a] concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -y "${OUTPUT_VID}"
+
+ffmpeg -i "${TARGET_FILE_NAME}" -i "${SOURCE_VID}" -i "input_noise.mp3" -filter_complex "[0:v:0]scale=-1:1280[v1]; [v1]crop=720:1280:0:0[v0]; [v0][0:a][1:v][1:a] concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -y "${OUTPUT_VID}"
+ffplay -autoexit "${OUTPUT_VID}"
+
+ffmpeg -i input1.mp4 -i input2.mp4 -filter_complex \
+"[0:v]scale=1024:576:force_original_aspect_ratio=1[v0]; \ 
+ [1:v]scale=1024:576:force_original_aspect_ratio=1[v1]; \
+ [v0][0:a][v1][1:a]concat=n=2:v=1:a=1[v][a]" -map [v] -map [a] output.mp4
+
+ffmpeg -i d:\1.mp4 -i d:\2.mp4 -filter_complex "concat=n=2:v=1:a=1 [v] [a]; \
+[v]scale=320:200[v2]" -map "[v2]" -map "[a]" d:\3.mp4
+
+----
+ls *.mp4| head -n 50 | while read line; do echo 
+ffmpeg -i $line.mp4 -filter_complex "[0:v]setpts=1*PTS[v];[0:a]atempo=1.1[a]" -map "[v]" -map "[a]" $line;
+done;
+
+ffmpeg -i _shiyya__2474177348860379803_5776153997.mp4 -filter_complex "[0:v]setpts=1*PTS[v];[0:a]atempo=1.1[a]" -map "[v]" -map "[a]" output.mp4
+```

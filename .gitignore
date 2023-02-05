@@ -8,3 +8,5 @@ output/
 .output.json
 
 dl/frames*
+
+output-backup.tar

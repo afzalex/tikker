@@ -1,13 +1,16 @@
 #!/bin/bash
 
-inputdir=output/general/downloads/
-outputdir=output/general/frames/at500/
+source .env
+inputdir="$outputDir/downloads/"
+outputdir="$outputDir/frames/at500/"
 force=$1
 
 mkdir -p "$outputdir"
-list="`ls ${inputdir} | grep '.mp4'`"
+list="`ls ${inputdir} | grep -E '.mp4$'`"
 entrycount=`echo "$list" | wc -l`
 counter=0
+corruptEntriesReportFile="$outputDir/corrupt_entries_report.txt"
+rm -f "$corrupt_entries_report"
 # echo "$list" | 
 while read -u3 line
 do 
@@ -19,15 +22,15 @@ do
         continue
     fi
 
-    echo "processing ${inputdir}${line} : $progress%"
-
+    echo "Processing ${inputdir}${line} : $progress%"
 
     # echo ffmpeg  -nostdin -v error -i "${inputdir}${line}" -frames:v 10 -r 0.5 "${outputdir}${line}_frame%02d.jpeg"
     ffmpeg  -nostdin -v error -i "${inputdir}${line}" -frames:v 10 -r 0.5 "${outputdir}${line}_frame%02d.jpeg" < /dev/null
     status=$?
     if [[ "$status" != 0 ]]
     then 
-        echo "Error occured [$status]."
+        echo "Error occured [$status]. "
+        echo "${line}" >> "$corruptEntriesReportFile"
         if [[ $1 == "f" ]]
         then
             continue
