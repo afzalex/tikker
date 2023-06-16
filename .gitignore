@@ -6,6 +6,7 @@ output/
 .idea
 
 .output.json
+.output.savetocrnt.json
 
 dl/frames*
 

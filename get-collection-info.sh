@@ -1,7 +1,7 @@
 #!/bin/bash
 
 outputDir=output
-collectionId=17909366908042779
+collectionId=fetchfromenv
 alreadyProcessedThreshold=100 # already processed files found consicutively
 maxId=
 moreAvailable=true
