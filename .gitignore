@@ -11,3 +11,5 @@ output/
 dl/frames*
 
 output-backup.tar
+
+.tmp/

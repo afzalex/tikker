@@ -1,0 +1,34 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Insta Mover
+
+on:
+  push:
+    branches: [fzbot]
+  # schedule:
+  #   - cron: '*/1 * * * *'
+
+jobs:
+  move-to-crnt:
+    runs-on: ubuntu-latest
+    env:
+      IG_COOKIE_VALUE: ${{ secrets.IG_COOKIE_VALUE }}
+      IG_CSRFTOKEN: ${{ secrets.IG_CSRFTOKEN }}
+      IG_ASBD_ID: ${{ vars.IG_ASBD_ID }}
+      IG_REFERER_01: ${{vars.IG_REFERER_01}}
+    steps:
+    - name: Checkout fzbot
+      uses: actions/checkout@v3
+      with:
+        ref: fzbot
+    - name: Reset fzbot
+      run: |
+        echo "TEST : ${IG_REFERER_01}"
+        git config user.email afzalex.store@gmail.com
+        git config user.name "afzalex fzbot"
+        git fetch
+        git rebase origin/master
+    - name: Move From Saved To crnt
+      run: |
+        ./move-saved-to-crnt.sh
