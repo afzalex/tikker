@@ -3,7 +3,7 @@
 crnt_collection_id=fetchfromenv
 auto_collection_id=fetchfromenv
 xplr_collection_id=fetchfromenv
-alreadyProcessedThreshold=100 # already processed files found consicutively
+alreadyProcessedThreshold=20 # already processed files found consicutively
 maxId=
 moreAvailable=true
 
@@ -51,11 +51,15 @@ do
     # read -p "Continue : " yn; if [ "$yn" == "n" ]; then echo exit; fi
     for row in $(cat .output.savetocrnt.json | jq -r '.items[].media | @base64' )
     do 
-        while [[ $(( $(date +%s) - ${processStartTime} )) < ${moverate} ]]; do 
-            # echo "Waiting $(( $(date +%s) - ${processStartTime} ))"
-            sleep 0.25
-        done
-        # echo "Waiting released $(( $(date +%s) - ${processStartTime} ))"
+        if [[ $(( $(date +%s) - ${processStartTime} )) -lt ${moverate} ]]; then
+            echo -n "Waiting ";
+            while [[ $(( $(date +%s) - ${processStartTime} )) -lt ${moverate} ]]; do 
+                echo -n "."
+                sleep 0.25
+            done
+            echo "#"
+            echo "Waiting released at $(( $(date +%s) - ${processStartTime} )) / ${moverate} "
+        fi
         processStartTime=$(date +%s)
         json=`echo $row | base64 --decode`
         idval=`echo $json | jq -r '.pk'`; 
@@ -127,7 +131,6 @@ do
             fi
         done
         newlyProcessedCounter=$(($newlyProcessedCounter + 1))
-        exit
         # read -p "Continue : " yn; if [ "$yn" == "n" ]; then echo exit; fi
     done
     maxId=$(cat .output.savetocrnt.json | jq -r '.next_max_id')

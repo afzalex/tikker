@@ -1,0 +1,28 @@
+name: InstaMover Flag Remover
+
+on:
+  push:
+    branches: [none]
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  remove-flag:
+    needs: move-to-crnt
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout fzbot
+      uses: actions/checkout@v3
+      with:
+        ref: fzbot
+    - name: Remove parallel flag if found
+      run: |
+        git config user.email afzalex.store@gmail.com
+        git config user.name "afzalex fzbot"
+        if [[ -e IN_PROGRESS_FLAG ]]; then
+          git rm IN_PROGRESS_FLAG
+          git commit -m "Removed progress flag"
+          git push
+        fi

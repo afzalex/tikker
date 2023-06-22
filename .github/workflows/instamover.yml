@@ -1,16 +1,39 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: Insta Mover
 
 on:
   push:
     branches: [master]
-  # schedule:
-  #   - cron: '*/1 * * * *'
+  schedule:
+    - cron: '*/15 * * * *'
+
+# concurrency:
+#   group: ${{ github.workflow }}
+#   cancel-in-progress: true
 
 jobs:
+  pre-job-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout fzbot
+      uses: actions/checkout@v3
+      with:
+        ref: fzbot
+    - name: Check parallel run
+      run: |
+        git config user.email afzalex.store@gmail.com
+        git config user.name "afzalex fzbot"
+        if [[ -e IN_PROGRESS_FLAG ]]; then
+          echo "IN_PROGRESS_FLAG found : need to explicitly remove it or wait for other job to complete"
+          exit 1
+        fi
+    - name: Add progress flag
+      run: |
+        touch IN_PROGRESS_FLAG
+        git add IN_PROGRESS_FLAG
+        git commit -m "fzbot IN_PROGRESS_FLAG at $(date)"
+        git push
   move-to-crnt:
+    needs: pre-job-check
     runs-on: ubuntu-latest
     env:
       IG_COOKIE_VALUE: ${{ secrets.IG_COOKIE_VALUE }}
@@ -28,15 +51,16 @@ jobs:
       run: |
         git config user.email afzalex.store@gmail.com
         git config user.name "afzalex fzbot"
+        fzbotVersion="$(( $( cat fzbot-version.txt ) + 1 ))"
+        echo "fzbotVersion=${fzbotVersion}" >> $GITHUB_ENV
         git fetch
-        git rebase origin/master
+        git reset --hard origin/master
     - name: Move From Saved To crnt
       run: |
         ./move-saved-to-crnt.sh
     - name: Updating fzbot
       run: |
-        fzbotVersion="$(( $( cat fzbot_version.txt ) + 1 ))"
-        echo "${fzbotVersion}" > fzbot_version.txt
+        echo "${fzbotVersion}" > fzbot-version.txt
         git add *
         git commit -m "fzbot Updated : v${fzbotVersion} at $(date)"
         git push -f
