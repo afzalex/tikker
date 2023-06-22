@@ -5,7 +5,7 @@ name: Insta Mover
 
 on:
   push:
-    branches: [fzbot]
+    branches: [master]
   # schedule:
   #   - cron: '*/1 * * * *'
 
@@ -17,6 +17,8 @@ jobs:
       IG_CSRFTOKEN: ${{ secrets.IG_CSRFTOKEN }}
       IG_ASBD_ID: ${{ vars.IG_ASBD_ID }}
       IG_REFERER_01: ${{vars.IG_REFERER_01}}
+      CRNT_MOVE_RATE: ${{vars.CRNT_MOVE_RATE}}
+      CRNT_FAIL_COUNT_TO_EXIT: ${{vars.CRNT_FAIL_COUNT_TO_EXIT}}
     steps:
     - name: Checkout fzbot
       uses: actions/checkout@v3
@@ -26,7 +28,7 @@ jobs:
       run: |
         git config user.email afzalex.store@gmail.com
         git config user.name "afzalex fzbot"
-        git fetch
+        git pull
         git rebase origin/master
         cat .github/workflows/instamover.yml
     - name: Move From Saved To crnt

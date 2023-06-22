@@ -46,7 +46,7 @@ do
     moreAvailable=false
     query="https://www.instagram.com/api/v1/feed/saved/posts/?max_id=$maxId";
     echo "Processed $newlyProcessedCounter new and $alreadyProcessedCounter already processed entries till max_id $maxId"
-    curl -sH @.tmp/headers.txt "${query}"
+    # curl -sH @.tmp/headers.txt "${query}"
     curl -sH @.tmp/headers.txt "${query}" | jq > .output.savetocrnt.json
     exit
     # read -p "Continue : " yn; if [ "$yn" == "n" ]; then echo exit; fi
