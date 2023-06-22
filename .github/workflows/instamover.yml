@@ -24,11 +24,11 @@ jobs:
         ref: fzbot
     - name: Reset fzbot
       run: |
-        echo "TEST : ${IG_REFERER_01}"
         git config user.email afzalex.store@gmail.com
         git config user.name "afzalex fzbot"
         git fetch
         git rebase origin/master
+        cat .github/workflows/instamover.yml
     - name: Move From Saved To crnt
       run: |
         ./move-saved-to-crnt.sh
