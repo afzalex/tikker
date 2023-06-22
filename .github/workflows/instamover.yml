@@ -28,9 +28,15 @@ jobs:
       run: |
         git config user.email afzalex.store@gmail.com
         git config user.name "afzalex fzbot"
-        git pull
+        git fetch
         git rebase origin/master
-        cat .github/workflows/instamover.yml
     - name: Move From Saved To crnt
       run: |
         ./move-saved-to-crnt.sh
+    - name: Updating fzbot
+      run: |
+        fzbotVersion="$(( $( cat fzbot_version.txt ) + 1 ))"
+        echo "${fzbotVersion}" > fzbot_version.txt
+        git add *
+        git commit -m "fzbot Updated : v${fzbotVersion} at $(date)"
+        git push -f

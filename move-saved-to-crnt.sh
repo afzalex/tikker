@@ -48,7 +48,6 @@ do
     echo "Processed $newlyProcessedCounter new and $alreadyProcessedCounter already processed entries till max_id $maxId"
     # curl -sH @.tmp/headers.txt "${query}"
     curl -sH @.tmp/headers.txt "${query}" | jq > .output.savetocrnt.json
-    exit
     # read -p "Continue : " yn; if [ "$yn" == "n" ]; then echo exit; fi
     for row in $(cat .output.savetocrnt.json | jq -r '.items[].media | @base64' )
     do 
@@ -128,6 +127,7 @@ do
             fi
         done
         newlyProcessedCounter=$(($newlyProcessedCounter + 1))
+        exit
         # read -p "Continue : " yn; if [ "$yn" == "n" ]; then echo exit; fi
     done
     maxId=$(cat .output.savetocrnt.json | jq -r '.next_max_id')
