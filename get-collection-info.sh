@@ -24,6 +24,9 @@ do
     echo "Processed $newlyProcessedCounter new and $alreadyProcessedCounter already processed entries till max_id $maxId"
     curl -sH @headers.txt "${query}" | jq > .output.json
 
+    echo "$( wc -c .output.json )"
+    exit
+
     for row in $(cat .output.json | jq -r '.items[] | @base64' )
     do 
         json=`echo $row | base64 --decode`
