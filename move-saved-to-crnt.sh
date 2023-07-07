@@ -47,7 +47,7 @@ do
     query="https://www.instagram.com/api/v1/feed/saved/posts/?max_id=$maxId"
     echo "Processed $newlyProcessedCounter new and $alreadyProcessedCounter already processed entries till max_id $maxId"
     # curl -sH @.tmp/headers.txt "${query}"
-    curl -sH @.tmp/headers.txt "${query}" > .output.savetocrnt.json
+    curl -v -sH @.tmp/headers.txt "${query}" > .output.savetocrnt.json
     if [[ $(cat .output.savetocrnt.json | jq -r '.status') -ne 'ok' ]]; then
         echo "Failed..."
         exit 1
