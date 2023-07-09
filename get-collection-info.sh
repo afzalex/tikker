@@ -25,7 +25,11 @@ do
     curl -sH @headers.txt "${query}" | jq > .output.json
 
     echo "$( wc -c .output.json )"
-    exit
+    
+    if [[ $(cat .output.json | jq -r '.status' ) != 'ok' ]]; then 
+        echo "Failed"; 
+        exit 1
+    fi
 
     for row in $(cat .output.json | jq -r '.items[] | @base64' )
     do 

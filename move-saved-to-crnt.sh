@@ -3,7 +3,7 @@
 crnt_collection_id=fetchfromenv
 auto_collection_id=fetchfromenv
 xplr_collection_id=fetchfromenv
-alreadyProcessedThreshold=20 # already processed files found consicutively
+alreadyProcessedThreshold=100 # already processed files found consicutively
 maxId=
 moreAvailable=true
 
