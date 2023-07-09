@@ -13,3 +13,5 @@ dl/frames*
 output-backup.tar
 
 .tmp/
+
+.move-saved-to-crnt.env

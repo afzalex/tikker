@@ -1,21 +1,27 @@
 #!/bin/bash
 
+mkdir -p .tmp
+if [ -f '.move-saved-to-crnt.env' ]; then 
+    cat '.move-saved-to-crnt.env' | while read line; do echo "export $line"; done > .tmp/environment-setup.sh
+    source .tmp/environment-setup.sh
+    rm -f .tmp/environment-setup.sh
+fi
+
+
 crnt_collection_id=fetchfromenv
 auto_collection_id=fetchfromenv
 xplr_collection_id=fetchfromenv
-alreadyProcessedThreshold=100 # already processed files found consicutively
+alreadyProcessedThreshold=fetchfromenv # already processed files found consecutively
 maxId=
 moreAvailable=true
 
-mkdir -p .tmp
-cat 'headers.txt.tpl' | envsubst > ".tmp/headers.txt"
-cat 'env-setup.sh.tpl' | envsubst > '.tmp/env-setup.sh'
-
-source .tmp/env-setup.sh
-
+cat 'scripts/templates/headers.txt.tpl' | envsubst > ".tmp/headers.txt"
+cat 'scripts/templates/config-setup.sh.tpl' | envsubst > '.tmp/config-setup.sh'
+source .tmp/config-setup.sh
+echo "hola <<<<<<<<<<<<<< $alreadyProcessedThreshold"
 mkdir -p "fzbot/collectionsToUserId"
 newlyProcessedCounter=0
-alreadyProcessedCounter=0 # already processed files found consicutively
+alreadyProcessedCounter=0 # already processed files found consecutively
 
 function join_by {
   local d=${1-} f=${2-}
@@ -47,9 +53,9 @@ do
     query="https://www.instagram.com/api/v1/feed/saved/posts/?max_id=$maxId"
     echo "Processed $newlyProcessedCounter new and $alreadyProcessedCounter already processed entries till max_id $maxId"
     # curl -sH @.tmp/headers.txt "${query}"
-    curl -v -sH @.tmp/headers.txt "${query}" > .output.savetocrnt.json
+    curl -sH @.tmp/headers.txt "${query}" > .output.savetocrnt.json
     if [[ $(cat .output.savetocrnt.json | jq -r '.status') -ne 'ok' ]]; then
-        echo "Failed..."
+        echo "Failed to fetch list of posts..."
         exit 1
     fi
     # read -p "Continue : " yn; if [ "$yn" == "n" ]; then echo exit; fi
@@ -81,10 +87,11 @@ do
         isalreadyprocessed=false
         target_callection_ids=()
         if [ "$feed_is_following" == "false" ]; then                                        # if user is not followed
-            if [ "${feed_saved_collection_ids##*$explr_collection_id*}" ]; then
+            if [ "${feed_saved_collection_ids##*$xplr_collection_id*}" ]; then
                 echo "going to add to explr ($xplr_collection_id)"
                 target_callection_ids+=("${xplr_collection_id}")
             else 
+                echo already processed
                 isalreadyprocessed=true
             fi
         fi
