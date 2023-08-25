@@ -30,7 +30,7 @@ do
         echo "Failed"; 
         exit 1
     fi
-
+    exit
     for row in $(cat .output.json | jq -r '.items[] | @base64' )
     do 
         json=`echo $row | base64 --decode`

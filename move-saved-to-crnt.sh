@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 mkdir -p .tmp
 if [ -f '.move-saved-to-crnt.env' ]; then 
     cat '.move-saved-to-crnt.env' | while read line; do echo "export $line"; done > .tmp/environment-setup.sh
@@ -18,7 +19,6 @@ moreAvailable=true
 cat 'scripts/templates/headers.txt.tpl' | envsubst > ".tmp/headers.txt"
 cat 'scripts/templates/config-setup.sh.tpl' | envsubst > '.tmp/config-setup.sh'
 source .tmp/config-setup.sh
-echo "hola <<<<<<<<<<<<<< $alreadyProcessedThreshold"
 mkdir -p "fzbot/collectionsToUserId"
 newlyProcessedCounter=0
 alreadyProcessedCounter=0 # already processed files found consecutively

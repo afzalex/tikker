@@ -110,7 +110,6 @@
             op += `Author Name : ${item.author.nickname}\n`
             op += `Data Pointer : ${dataPointer}\n`
             showIsDownloaded && (op += `Is Downloaded : ${(vm.downloaded.indexOf(item.id) != -1)}`)
-            console.log(op)
         }
 
         vm.showNextItemInfo = function () {
